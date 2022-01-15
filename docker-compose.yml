@@ -10,7 +10,8 @@ services:
     restart: always
     command: mysqld --sql_mode=""
     environment:
-      MYSQL_USER: 'root'
+      MYSQL_USER: 'user'
+      MYSQL_ROOT_PASSWORD: 'admin'
       MYSQL_DATABASE: 'fitness_center'
       # Password for root access
       MYSQL_PASSWORD: 'admin'
@@ -40,7 +41,7 @@ services:
 
   isme_backend:
     #this tells docker where to look for the Dockerfile to build the image
-    build: ./ISME_Backend
+    build: ./ISME_backend
     #name of your container and also the DNS name (nginx will proxy pass to this container from localhost:8000 when using a browser or Postman)
     container_name: backend
     restart: always
@@ -54,7 +55,8 @@ services:
       restart: always
       expose:
         - 80
-
+      ports:
+        - "8080:8080"
 
   nginx:
     build: ./nginx
@@ -63,5 +65,4 @@ services:
     #PORTS defines ports reachable from the outside world, like a browser or other clients
     ports: 
       - "8081:8081"
-      - "8080:8080"
 
